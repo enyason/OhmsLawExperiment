@@ -33,5 +33,9 @@ public class MainActivity extends AppCompatActivity implements CommunicatorOhmsL
     @Override
     public void result(OhmsLawResult result) {
 
+        FragmentOhmsLawResult.updateTableInfo(result);
+
     }
+
+
 }

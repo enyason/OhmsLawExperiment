@@ -1,5 +1,6 @@
 package com.nexdev.enyason.ohmslawexperiment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,10 +42,18 @@ public class FragmentOhmsLawExperiment  extends Fragment{
     ArrayList<Float> listVoltage = new ArrayList<Float>();
     ArrayList<Float> listCurrent = new ArrayList<Float>();
 
-    RelativeLayout layout;
+    CommunicatorOhmsLaw communicatorOhmsLaw;
 
 
     public FragmentOhmsLawExperiment() {
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        communicatorOhmsLaw = (CommunicatorOhmsLaw)context;
     }
 
     @Nullable
@@ -58,6 +67,30 @@ public class FragmentOhmsLawExperiment  extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        imageView = view.findViewById(R.id.image_view_voltmeter);
+
+
+        canvasOhmsLaw = view.findViewById(R.id.canvas_ohms_law);
+
+        tvResistance = view.findViewById(R.id.tv_resistance);
+        tvVoltage = view.findViewById(R.id.tv_voltage);
+        tvCurrent = view.findViewById(R.id.tv_current);
+
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+                setUpAlertDialog();
+            }
+        });
+
+
+
     }
 
 
@@ -102,7 +135,7 @@ public class FragmentOhmsLawExperiment  extends Fragment{
                     listCurrent.add(current);
 
 
-//                    communicatorOhmsLaw.result(new OhmsLawResult(valVoltage+"",""+current));
+                    communicatorOhmsLaw.result(new OhmsLawResult(valVoltage+"",""+current));
 
 
                 } else {
@@ -111,11 +144,12 @@ public class FragmentOhmsLawExperiment  extends Fragment{
                         Toast.makeText(getContext(), "Voltage Entry failed!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                         return;
+
                     } else {
 
                         listVoltage.add(valVoltage);
                         listCurrent.add(current);
-//                        communicatorOhmsLaw.result(new OhmsLawResult(valVoltage+"",""+current));
+                        communicatorOhmsLaw.result(new OhmsLawResult(valVoltage+"",""+current));
 
                     }
 
@@ -129,6 +163,8 @@ public class FragmentOhmsLawExperiment  extends Fragment{
 
                 yPointGraph = 1100 - (50 * valVoltage);
                 xPointGraph = 100 + (50000*current);
+
+
 
                 int drawable;
                 if (valVoltage > 0) {

@@ -143,6 +143,7 @@ public class CanvasOhmsLaw extends View {
 
 
 
+
     public void invalidateCanvas(Context context, int drawable, float x, float y) {
 
         if (drawable != 0) {
@@ -153,7 +154,7 @@ public class CanvasOhmsLaw extends View {
         pathSlope.reset();
 
         pathSlope.moveTo(100,1100);
-        pathSlope.lineTo(100, y);
+        pathSlope.lineTo(x, y);
         invalidate();
 
     }
